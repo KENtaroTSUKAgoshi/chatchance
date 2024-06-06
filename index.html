@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>何ができるだろうか。</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <h1>🥎会話のキャッチボール🥎</h1>
+    <!-- コンテンツ表示画面 -->
+    <div>
+        <!-- 各場所にidを設定しましょう -->
+        <div>
+            <input type="text" id="uname" placeholder="お題目">
+        </div>
+        <div>
+            <textarea id="text" placeholder="文章を入力してください"></textarea>
+        </div>
+        <button id="send">送信</button>
+        <!-- style.cssに "overflow: auto;"を書いてみましょう！※最後に -->
+        <div id="output"></div>
+
+        <input type="file" id="fileInput">
+        <button onclick="uploadFile()">Upload</button>
+
+      
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, update,remove, onChildRemoved,onChildChanged, }
+            from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: 
+            authDomain:
+             databaseURL:
+             projectId: 
+             storageBucket: 
+             messagingSenderId: 
+             appId: "",
+             measurementId: 
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); //RealtimeDBに接続
+        const dbRef = ref(db, "chat"); //RealtimeDB内の"chat"を使う
+
+        //データ登録(Click)
+        $("#send").on('click', function(){
+            const uname =  $("#uname").val();
+            const text =  $("#text").val();
+
+            console.log(uname, '名前')
+            console.log(text, 'テキスト')
+
+            const msg = {
+                uname:  $("#uname").val(),
+                text:  $("#text").val(),
+            }
+
+            const newPostRef = push(dbRef)
+            set(newPostRef, msg)
+
+            $('#uname').val("");
+            $("#text").val("");
+
+        });
+
+        //データ登録(Enter)
+
+        //最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
+        onChildAdded(dbRef, function(data){
+            const msg = data.val();
+            console.log(msg, 'データの中身')
+            const key = data. key;
+            console.log(key, '鍵の中身')
+
+            let html = `
+                <div class="msg">
+                   <p>${msg.uname}</p>
+                   <p>${msg.text}</p>
+                </div>
+            `
+            $("#output").append(html);
+
+        })
+
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        function uploadFile() {
+         // ファイル入力欄からファイルを取得
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+    
+         // ファイルの保存先を指定
+         const storageRef = storage.ref('uploads/' + file.name);
+    
+          // ファイルをアップロード
+         storageRef.put(file).then((snapshot) => {
+         console.log('Uploaded a file!', snapshot);
+         alert('ファイルがアップロードされました！');
+         }).catch((error) => {
+         console.error('Error uploading file:', error);
+         });
+       }
+
+    </script>
+</body>
+
+</html>

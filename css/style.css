@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  margin: 50px 0;
+  font-size: 25px;
+  color:skyblue
+  
+}
+
+input {
+  width: 500px;
+  padding: 10px;
+  display: block;
+  margin: 0 auto 50px;
+  border-radius:30px;
+  background-color: #95d1e4;
+}
+
+textarea {
+  width: 500px;
+  height: 200px;
+  padding: 10px;
+  margin: 0 auto 50px;
+  display: block;
+  resize: none;
+  border-radius:30px;
+  background-image: linear-gradient(90deg, rgba(111, 111, 111, .1) 50%, transparent 50%), linear-gradient(rgba(111, 111, 111,.1) 50%, transparent 50%);/* チェック色 */
+	background-size: 15px 15px;
+
+}
+
+button {
+  width: 200px;
+  height: 50px;
+  margin: 0 auto 50px;
+  display: block;
+  font-size: 16px;
+  border-radius:30px;
+}
+
+#output {
+  width: 500px;
+  display: block;
+  height: 600px;
+  border: 1px solid #77bbcf;
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 10px;
+  background:url(https://cdn.amnibus.com/upload/save_image/20220512172515_627cc46b88ed4.jpg);
+  background-repeat: no-repeat;
+  background-size:contain;
+  border-radius:30px;
+
+}
+.msg:nth-child(even){
+  margin-left: auto;
+  width: 200px;
+  margin-top: 10px;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: blueviolet;
+}
+
+.msg:nth-child(odd){
+  margin-right: auto;
+  width: 200px;
+  margin-top: 10px;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: pink;
+}
